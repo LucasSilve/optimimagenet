@@ -405,7 +405,7 @@ phi=torch.from_numpy(phi)
 #print(torch.sum(phi))
 
 avg=nn.Conv2d(nombre_filtre,nombre_filtre,kernel,bias=False,padding=padding_,groups=nombre_filtre)
-avg=avg.cuda()
+avg = torch.nn.DataParallel(avg).cuda()
 
 for k1 in range(0,nombre_filtre):
     avg.weight.data[k1,0,:,:]=phi
