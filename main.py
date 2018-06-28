@@ -268,8 +268,8 @@ def train(train_loader, model, optimizer, epoch):
                     plt.subplot(1, 2, 2)
                     plt.imshow(fimag)
 
-                    fig.savefig('/home/edouard/lucas/optimimagenet/images/filter%(k)%(channel_).pdf' % {'k': k,
-                 """                                                                                               'channel_': channel_})
+                    #fig.savefig('/home/edouard/lucas/optimimagenet/images/filter%(k)%(channel_).pdf' % {'k': k,
+                 """                                                                                               #'channel_': channel_})
 
 
 def validate(val_loader, model, criterion):
