@@ -238,7 +238,6 @@ def train(train_loader, model, optimizer, epoch):
         # compute gradient and do SGD step
         optimizer.zero_grad()
         loss.backward()
-        test
         optimizer.step()
 
         # measure elapsed time
@@ -267,7 +266,7 @@ def train(train_loader, model, optimizer, epoch):
                     plt.subplot(1, 2, 2)
                     plt.imshow(fimag)
 
-                    fig.savefig('/home/lucas/PycharmProjects/optimimagenet/images/filter%(k)%(channel_).pdf' % {'k': k,
+                    fig.savefig('/home/edouard/lucas/optimimagenet/images/filter%(k)%(channel_).pdf' % {'k': k,
                                                                                                                 'channel_': channel_})
 
 
