@@ -229,7 +229,7 @@ def train(train_loader, model, optimizer, epoch):
         # compute output
 
         #output = model(compress)
-        loss,output,p,ratio_ = myloss(input,Mymodel)
+        loss,output,p,ratio_ = myloss(input,model)
 
         # measure accuracy and record loss
         ###prec1, prec5 = accuracy(output, target, topk=(1, 5))
