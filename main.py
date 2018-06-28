@@ -19,8 +19,9 @@ import numpy as np
 from numpy.fft import fftshift
 from scipy.fftpack import fft2
 import torch.nn.functional as F
-import matplotlib.pyplot as plt
 import matplotlib
+import matplotlib.pyplot as plt
+
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
