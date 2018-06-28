@@ -79,12 +79,13 @@ def main():
                                 world_size=args.world_size)
 
     # create model
-    if args.pretrained:
+    """if args.pretrained:
         print("=> using pre-trained model '{}'".format(args.arch))
         model = models.__dict__[args.arch](pretrained=True)
     else:
         print("=> creating model '{}'".format(args.arch))
-        model = models.__dict__[args.arch]()
+        model = models.__dict__[args.arch]()"""
+    model=Net1(nombre_filtre)
 
     if not args.distributed:
         if args.arch.startswith('alexnet') or args.arch.startswith('vgg'):
@@ -215,14 +216,14 @@ def train(train_loader, model, optimizer, epoch):
     top5 = AverageMeter()
 
     # switch to train mode
-    model.train()
+    #model.train()
 
     end = time.time()
 
     for i, (input, target) in enumerate(train_loader):
         # measure data loading time
         data_time.update(time.time() - end)
-        target = target.cuda(non_blocking=True)
+        #target = target.cuda(non_blocking=True)
 
         input=input.cuda()
         # compute output
@@ -248,7 +249,7 @@ def train(train_loader, model, optimizer, epoch):
 
         if i % args.print_freq == 0:
             print('batch :', i)
-            """print('Epoch: [{0}][{1}/{2}]\t'
+            print('Epoch: [{0}][{1}/{2}]\t'
                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
                   'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
@@ -256,7 +257,7 @@ def train(train_loader, model, optimizer, epoch):
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'.format(
                    #epoch, i, len(train_loader), batch_time=batch_time,
-                   #data_time=data_time, loss=losses, top1=top1, top5=top5))"""
+            #print(data_time=data_time, loss=losses, top1=top1, top5=top5))
             """for k in range(0, nombre_filtre):
 
                 for channel_ in range(0, channel):
@@ -430,8 +431,6 @@ class Net1(nn.Module):
 
         return y,p
 
-
-Mymodel = Net1(nombre_filtre).cuda()
 
 
 if __name__ == '__main__':
