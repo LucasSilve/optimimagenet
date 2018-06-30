@@ -68,6 +68,7 @@ best_prec1 = 0
 
 
 def main():
+    print('starting...')
     matplotlib.get_backend()
     global args, best_prec1
     args = parser.parse_args()
