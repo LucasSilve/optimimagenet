@@ -20,8 +20,9 @@ from numpy.fft import fftshift
 from scipy.fftpack import fft2
 import torch.nn.functional as F
 import matplotlib
-plt.switch_backend('agg')
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
+
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
