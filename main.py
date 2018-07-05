@@ -428,7 +428,7 @@ class Net1(nn.Module):
         y_i = y_i ** 2
         y = y_r + y_i
         y = torch.sqrt(y)
-        p = y                       #p stock le module au carré de Wx
+        p = y                       #p stock le module au carre de Wx
         y = avg(y)
 
         return y,p
