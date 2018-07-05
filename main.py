@@ -391,7 +391,7 @@ lum_seul=False
 if lum_seul:
     channel=1
 else: channel=3
-nombre_filtre=2
+nombre_filtre=16
 padding_=5
 kernel=2*padding_+1
 learning_rate=0.005
