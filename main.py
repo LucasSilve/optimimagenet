@@ -278,6 +278,8 @@ def train(train_loader, model, optimizer, epoch):
 
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
+
+        if i%500==0:
             for k in range(0, nombre_filtre):
 
                 for channel_ in range(0, channel):
