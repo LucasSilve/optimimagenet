@@ -10,7 +10,7 @@ import torch.backends.cudnn as cudnn
 import torch.distributed as dist
 import torch.optim
 import torch.utils.data
-import torch.utils.data.distributed
+#import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
@@ -88,7 +88,7 @@ def main():
         model = models.__dict__[args.arch]()"""
     model=Net1(nombre_filtre)
 
-    if not args.distributed:
+    """if not args.distributed:
         if args.arch.startswith('alexnet') or args.arch.startswith('vgg'):
             model.features = torch.nn.DataParallel(model.features)
             model.cuda()
@@ -96,7 +96,8 @@ def main():
             model = torch.nn.DataParallel(model).cuda()
     else:
         model.cuda()
-        model = torch.nn.parallel.DistributedDataParallel(model)
+        model = torch.nn.parallel.DistributedDataParallel(model)"""
+    model = torch.nn.DataParallel(model).cuda()
 
     # define loss function (criterion) and optimizer
     ################criterion = nn.CrossEntropyLoss().cuda()
