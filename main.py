@@ -69,7 +69,6 @@ best_prec1 = 0
 
 def main():
     print('starting...')
-    losses = AverageMeter()
     matplotlib.get_backend()
     global args, best_prec1
     args = parser.parse_args()
@@ -225,6 +224,9 @@ def train(train_loader, model, optimizer, epoch):
 #def train(model, optimizer, epoch):
     batch_time = AverageMeter()
     data_time = AverageMeter()
+
+
+    losses = AverageMeter()
 
     ratio = AverageMeter()
     top1 = AverageMeter()
