@@ -129,7 +129,6 @@ def main():
     valdir = os.path.join(args.data, 'val')
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
-plt.switch_backend('agg')
 
     train_dataset = datasets.ImageFolder(
         traindir,
