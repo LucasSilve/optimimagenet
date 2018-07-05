@@ -279,7 +279,7 @@ def train(train_loader, model, optimizer, epoch):
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
             for k in range(0, nombre_filtre):
-model
+
                 for channel_ in range(0, channel):
                     fig = plt.figure(1 + k * channel + channel_)
                     freal = model.conv_real.weight.data[k, channel_]
