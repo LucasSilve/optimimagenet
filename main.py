@@ -69,6 +69,7 @@ best_prec1 = 0
 
 def main():
     print('starting...')
+    losses = AverageMeter()
     matplotlib.get_backend()
     global args, best_prec1
     args = parser.parse_args()
@@ -177,6 +178,18 @@ def main():
         losses.reset()
         ratio.reset()
         # save filter images
+        for k in range(0, nombre_filtre):
+
+            for channel_ in range(0, channel):
+                fig = plt.figure(1 + k * channel + channel_)
+                freal = Mymodel.conv_real.weight.data[k, channel_]
+                fimag = Mymodel.conv_imag.weight.data[k, channel_]
+                plt.subplot(1, 2, 1)
+                plt.imshow(freal)
+                plt.subplot(1, 2, 2)
+                plt.imshow(fimag)
+
+                fig.savefig('/home/lucass/optimimagenet/images/filter{k}{channel_.pdf'.format(k=k, channel_=channel_))
 
 
         # remember best prec@1 and save checkpoint
@@ -212,7 +225,7 @@ def train(train_loader, model, optimizer, epoch):
 #def train(model, optimizer, epoch):
     batch_time = AverageMeter()
     data_time = AverageMeter()
-    losses = AverageMeter()
+
     ratio = AverageMeter()
     top1 = AverageMeter()
     top5 = AverageMeter()
@@ -226,7 +239,7 @@ def train(train_loader, model, optimizer, epoch):
         # measure data loading time
         data_time.update(time.time() - end)
         #target = target.cuda(non_blocking=True)
-        print('batch progress :', i)
+
         input=input.cuda()
         # compute output
 
@@ -251,12 +264,13 @@ def train(train_loader, model, optimizer, epoch):
 
         if i % args.print_freq == 0:
             print('batch :', i)
-            print('Epoch: [{0}][{1}/{2}]\t'
-                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                  'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
+            print('Epoch: [{0}][{1}/{2}]\t',
+                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t',
+                  'Data {data_time.val:.3f} ({data_time.avg:.3f})\t',
                   'Loss {loss.val:.4f} ({loss.avg:.4f})\t'.format(
                    epoch, i, len(train_loader), batch_time=batch_time,
                 data_time=data_time, loss=losses))#, top1=top1, top5=top5))
+            print('ratio :', ratio.avg)
 
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
