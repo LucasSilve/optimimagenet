@@ -20,7 +20,7 @@ from numpy.fft import fftshift
 from scipy.fftpack import fft2
 import torch.nn.functional as F
 import matplotlib
-#plt.switch_backend('agg')
+plt.switch_backend('agg')
 import matplotlib.pyplot as plt
 
 model_names = sorted(name for name in models.__dict__
@@ -41,7 +41,7 @@ parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
-parser.add_argument('-b', '--batchplt.switch_backend('agg')-size', default=256, type=int,
+parser.add_argument('-b', '--batch-size', default=256, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate')
