@@ -129,6 +129,7 @@ def main():
     valdir = os.path.join(args.data, 'val')
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
+plt.switch_backend('agg')
 
     train_dataset = datasets.ImageFolder(
         traindir,
@@ -153,7 +154,8 @@ def main():
             transforms.Resize(256),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
-            normalize,
+            normalize,plt.switch_backend('agg')
+
         ])),
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)"""
@@ -183,8 +185,8 @@ def main():
 
             for channel_ in range(0, channel):
                 fig = plt.figure(1 + k * channel + channel_)
-                freal = Mymodel.conv_real.weight.data[k, channel_]
-                fimag = Mymodel.conv_imag.weight.data[k, channel_]
+                freal = model.conv_real.weight.data[k, channel_]
+                fimag = model.conv_imag.weight.data[k, channel_]
                 plt.subplot(1, 2, 1)
                 plt.imshow(freal)
                 plt.subplot(1, 2, 2)
