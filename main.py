@@ -276,7 +276,7 @@ def train(train_loader, model, optimizer, epoch):
 
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
-            """for k in range(0, nombre_filtre):
+            for k in range(0, nombre_filtre):
 
                 for channel_ in range(0, channel):
                     fig = plt.figure(1 + k * channel + channel_)
@@ -287,8 +287,8 @@ def train(train_loader, model, optimizer, epoch):
                     plt.subplot(1, 2, 2)
                     plt.imshow(fimag)
 
-                    #fig.savefig('/home/edouard/lucas/optimimagenet/images/filter%(k)%(channel_).pdf' % {'k': k,
-                 """                                                                                               #'channel_': channel_})
+                    fig.savefig('/home/lucass/optimimagenet/images/filter{k}{channel_}).pdf'.format(k=k,channel_=channel_))
+                                                                                                                #'channel_': channel_})
 
 
 def validate(val_loader, model, criterion):
