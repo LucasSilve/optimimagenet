@@ -283,8 +283,8 @@ def train(train_loader, model, optimizer, epoch):
 
                 for channel_ in range(0, channel):
                     fig = plt.figure(1 + k * channel + channel_)
-                    freal = Mymodel.conv_real.weight.data[k, channel_]
-                    fimag = Mymodel.conv_imag.weight.data[k, channel_]
+                    freal = model.conv_real.weight.data[k, channel_]
+                    fimag = model.conv_imag.weight.data[k, channel_]
                     plt.subplot(1, 2, 1)
                     plt.imshow(freal)
                     plt.subplot(1, 2, 2)
