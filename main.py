@@ -406,8 +406,8 @@ def gabor_2d(M, N, sigma, theta, xi, slant=1.0, offset=0, fft_shift=None):
     D = np.array([[1, 0], [0, slant * slant]])
     curv = np.dot(R, np.dot(D, R_inv)) / ( 2 * sigma * sigma)
 
-    for ex in [-2, -1, 0, 1, 2]:
-        for ey in [-2, -1, 0, 1, 2]:
+    for ex in [0]:
+        for ey in [0]:
             [xx, yy] = np.mgrid[offset + ex * M:offset + M + ex * M, offset + ey * N:offset + N + ey * N]
             arg = -(curv[0, 0] * np.multiply(xx, xx) + (curv[0, 1] + curv[1, 0]) * np.multiply(xx, yy) + curv[
                 1, 1] * np.multiply(yy, yy)) + 1.j * (xx * xi * np.cos(theta) + yy * xi * np.sin(theta))
@@ -420,7 +420,7 @@ def gabor_2d(M, N, sigma, theta, xi, slant=1.0, offset=0, fft_shift=None):
         gab = np.fft.fftshift(gab, axes=(0, 1))
     return gab
 
-phi=gabor_2d(kernel,kernel,1,0,0,fft_shift=True)
+phi=gabor_2d(kernel,kernel,3.5,0,0,fft_shift=False,offset=-padding_)
 phi=np.absolute(phi)
 phi_chap=fft2(phi)
 phi_chap=np.absolute(phi)
