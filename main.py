@@ -426,6 +426,7 @@ phi_chap=fft2(phi)
 phi_chap=np.absolute(phi)
 phi=torch.from_numpy(phi)
 #print(torch.sum(phi))
+phi=phi/torch.sum(phi)
 
 avg=nn.Conv2d(nombre_filtre,nombre_filtre,kernel,bias=False,padding=padding_,groups=nombre_filtre)
 
