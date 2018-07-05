@@ -42,7 +42,7 @@ parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
-parser.add_argument('-b', '--batch-size', default=256, type=int,
+parser.add_argument('-b', '--batch-size', default=64, type=int,
                     metavar='N', help='mini-batch size (default: 256)')
 parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate')
@@ -133,7 +133,7 @@ def main():
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            transforms.RandomResizedCrop(224),
+            transforms.RandomResizedCrop(112),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             normalize,
@@ -279,7 +279,7 @@ def train(train_loader, model, optimizer, epoch):
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
             for k in range(0, nombre_filtre):
-
+model
                 for channel_ in range(0, channel):
                     fig = plt.figure(1 + k * channel + channel_)
                     freal = model.conv_real.weight.data[k, channel_]
@@ -391,7 +391,7 @@ lum_seul=False
 if lum_seul:
     channel=1
 else: channel=3
-nombre_filtre=6
+nombre_filtre=16
 padding_=5
 kernel=2*padding_+1
 learning_rate=0.005
