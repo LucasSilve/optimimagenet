@@ -268,7 +268,6 @@ def train(train_loader, model, optimizer, epoch):
         end = time.time()
 
         if i % args.print_freq == 0:
-            print('batch :', i)
             print('Epoch: [{0}][{1}/{2}]\t'
                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
@@ -290,7 +289,8 @@ def train(train_loader, model, optimizer, epoch):
                     plt.subplot(1, 2, 2)
                     plt.imshow(fimag)
 
-                    fig.savefig('/home/lucass/optimimagenet/images/filter{k}{channel_}).pdf'.format(k=k,channel_=channel_))
+                    fig.savefig('/home/lucass/optimimagenet/images/filter{k}channel{channel_}batch{i=).pdf'.format(
+                        k=k,channel_=channel_,i=i))
                                                                                                                 #'channel_': channel_})
 
 
