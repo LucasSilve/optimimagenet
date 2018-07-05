@@ -289,7 +289,7 @@ def train(train_loader, model, optimizer, epoch):
                     plt.subplot(1, 2, 2)
                     plt.imshow(fimag)
 
-                    fig.savefig('/home/lucass/optimimagenet/images/filter{k}channel{channel_}batch{i=).pdf'.format(
+                    fig.savefig('/home/lucass/optimimagenet/images/filter{k}channel{channel_}batch{i}.pdf'.format(
                         k=k,channel_=channel_,i=i))
                                                                                                                 #'channel_': channel_})
 
