@@ -286,7 +286,7 @@ def train(train_loader, model, optimizer, epoch):
         if i%500==0:
             h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
 
-            omega = np.zeros((imsize, imsize))  # stock la somme des modules au carré des psi chapeau
+            omega = np.zeros((imsize, imsize))  # stock la somme des modules au carre des psi chapeau
             norm = np.zeros((nombre_filtre, channel))
 
             for channel_ in range(0, channel):
