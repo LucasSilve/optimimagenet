@@ -291,8 +291,8 @@ def train(train_loader, model, optimizer, epoch):
 
             for channel_ in range(0, channel):
                 for filter_index in range(0, nombre_filtre):
-                    fr = Net1.conv_real.weight.data[filter_index, channel_]
-                    fi = Net1.conv_imag.weight.data[filter_index, channel_]
+                    fr = model.conv_real.weight.data[filter_index, channel_]
+                    fi = model.conv_imag.weight.data[filter_index, channel_]
                     fr = fr.cpu().detach().numpy()
                     fi = fi.cpu().detach().numpy()
                     f = fr + 1j * fi
