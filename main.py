@@ -274,47 +274,51 @@ def train(train_loader, model, optimizer, epoch):
             print('Epoch: [{0}][{1}/{2}]\t'
                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
-                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'.format(
+                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
+                  'ratio {ratio.avg()}\t'.format(
                    epoch, i, len(train_loader), batch_time=batch_time,
-                data_time=data_time, loss=losses))#, top1=top1, top5=top5))
-            print('ratio :', ratio.avg.item())
+                data_time=data_time, loss=losses,ratio=ratio))#, top1=top1, top5=top5))
+
 
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
 
         if i%500==0:
+            h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
+
+            omega = np.zeros((imsize, imsize))  # stock la somme des modules au carré des psi chapeau
+            norm = np.zeros((nombre_filtre, channel))
+
+            for channel_ in range(0, channel):
+                for filter_index in range(0, nombre_filtre):
+                    fr = Net1.conv_real.weight.data[filter_index, channel_]
+                    fi = Net1.conv_imag.weight.data[filter_index, channel_]
+                    fr = fr.cpu().detach().numpy()
+                    fi = fi.cpu().detach().numpy()
+                    f = fr + 1j * fi
+                    f = pad(f)
+                    f_chap = fft2(f)
+                    h[filter_index, channel_, :, :] = f_chap
+
+                    omega = omega + np.absolute(f_chap) ** 2
+
             for k in range(0, nombre_filtre):
 
                 for channel_ in range(0, channel):
                     fig = plt.figure(1 + k * channel + channel_)
                     freal = model.conv_real.weight.data[k, channel_]
                     fimag = model.conv_imag.weight.data[k, channel_]
-                    plt.subplot(1, 2, 1)
+                    plt.subplot(1, 3, 1)
                     plt.imshow(freal)
-                    plt.subplot(1, 2, 2)
+                    plt.subplot(1, 3, 2)
                     plt.imshow(fimag)
+                    plt.subplot(1,3,3)
+                    plt.imshow(h[k,channel_])
 
-                    fig.savefig('/home/lucass/optimimagenet/images/filter{k}channel{channel_}batch{i}.pdf'.format(
+                    fig.savefig('/home/lucass/optimimagenet/images2/filter{k}channel{channel_}batch{i}.pdf'.format(
                         k=k,channel_=channel_,i=i))
 
 
-                    h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
-
-                    omega = np.zeros((imsize, imsize))  # stock la somme des modules au carré des psi chapeau
-                    norm = np.zeros((nombre_filtre, channel))
-
-                    for channel_ in range(0, channel):
-                        for filter_index in range(0, nombre_filtre):
-                            fr = Net1.conv_real.weight.data[filter_index, channel_]
-                            fi = Net1.conv_imag.weight.data[filter_index, channel_]
-                            fr = fr.cpu().detach().numpy()
-                            fi = fi.cpu().detach().numpy()
-                            f = fr + 1j * fi
-                            f = pad(f)
-                            f_chap = fft2(f)
-                            h[filter_index, channel_, :, :] = f_chap
-
-                            omega = omega + np.absolute(f_chap) ** 2
 
                     """for channel_ in range(0, channel):
                         for filter_index in range(0, nombre_filtre):
