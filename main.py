@@ -65,7 +65,7 @@ parser.add_argument('--dist-url', default='tcp://224.66.41.62:23456', type=str,
 parser.add_argument('--dist-backend', default='gloo', type=str,
                     help='distributed backend')
 
-best_prec1 = 0
+best_loss = 0
 
 
 
@@ -114,7 +114,7 @@ def main():
             print("=> loading checkpoint '{}'".format(args.resume))
             checkpoint = torch.load(args.resume)
             args.start_epoch = checkpoint['epoch']
-            best_prec1 = checkpoint['best_prec1']
+            best_loss = checkpoint['best_loss']
             model.load_state_dict(checkpoint['state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer'])
             print("=> loaded checkpoint '{}' (epoch {})"
@@ -172,7 +172,6 @@ def main():
         train(train_loader, model, optimizer, epoch)
         #train(model, optimizer, epoch)
         # evaluate on validation set
-        prec1 = validate(val_loader, model, criterion)
 
         print('epoch =', epoch + 1)
         print('loss = ', losses.avg)
@@ -180,7 +179,7 @@ def main():
         losses.reset()
         ratio.reset()
         # save filter images
-        for k in range(0, nombre_filtre):
+        """for k in range(0, nombre_filtre):
 
             for channel_ in range(0, channel):
                 fig = plt.figure(1 + k * channel + channel_)
@@ -191,17 +190,17 @@ def main():
                 plt.subplot(1, 2, 2)
                 plt.imshow(fimag)
 
-                fig.savefig('/home/lucass/optimimagenet/images/filter{k}{channel_.pdf'.format(k=k, channel_=channel_))
+                fig.savefig('/home/lucass/optimimagenet/images/filter{k}{channel_.pdf'.format(k=k, channel_=channel_))"""
 
 
         # remember best prec@1 and save checkpoint
-        is_best = prec1 > best_prec1
-        best_prec1 = max(prec1, best_prec1)
+        is_best = losses.avg()>best_loss
+        best_loss=max(best_loss,losses.avg())
         save_checkpoint({
             'epoch': epoch + 1,
             'arch': args.arch,
             'state_dict': model.state_dict(),
-            'best_prec1': best_prec1,
+            'best_loss': best_loss,
             'optimizer' : optimizer.state_dict(),
         }, is_best)
 
@@ -232,8 +231,8 @@ def train(train_loader, model, optimizer, epoch):
     losses = AverageMeter()
 
     ratio = AverageMeter()
-    top1 = AverageMeter()
-    top5 = AverageMeter()
+    #top1 = AverageMeter()
+    #top5 = AverageMeter()
 
     # switch to train mode
     #model.train()
