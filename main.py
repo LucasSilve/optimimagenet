@@ -133,7 +133,7 @@ def main():
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            transforms.RandomResizedCrop(112),
+            transforms.RandomResizedCrop(200),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             normalize,
