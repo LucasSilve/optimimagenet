@@ -66,7 +66,7 @@ parser.add_argument('--dist-backend', default='gloo', type=str,
                     help='distributed backend')
 
 best_loss = 0
-
+imsize=200
 
 
 def main():
@@ -133,7 +133,7 @@ def main():
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            transforms.RandomResizedCrop(200),
+            transforms.RandomResizedCrop(imsize),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             normalize,
@@ -221,6 +221,10 @@ def myloss(input,net):
     loss = loss+regular_*lambda_regular
     return loss,y,p,ratio
 
+def pad(f):                                         #effectue un padding pour le filtre pour pouvoir faire la transformée de Fourier
+    out=np.zeros((imsize,imsize), dtype=complex)
+    out[imsize//2-padding_:imsize//2 +1+padding_,imsize//2-padding_:imsize//2+1+padding_]=f
+    return out
 
 def train(train_loader, model, optimizer, epoch):
 #def train(model, optimizer, epoch):
@@ -292,6 +296,37 @@ def train(train_loader, model, optimizer, epoch):
 
                     fig.savefig('/home/lucass/optimimagenet/images/filter{k}channel{channel_}batch{i}.pdf'.format(
                         k=k,channel_=channel_,i=i))
+
+
+                    h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
+
+                    omega = np.zeros((imsize, imsize))  # stock la somme des modules au carré des psi chapeau
+                    norm = np.zeros((nombre_filtre, channel))
+
+                    for channel_ in range(0, channel):
+                        for filter_index in range(0, nombre_filtre):
+                            fr = Net1.conv_real.weight.data[filter_index, channel_]
+                            fi = Net1.conv_imag.weight.data[filter_index, channel_]
+                            fr = fr.cpu().detach().numpy()
+                            fi = fi.cpu().detach().numpy()
+                            f = fr + 1j * fi
+                            f = pad(f)
+                            f_chap = fft2(f)
+                            h[filter_index, channel_, :, :] = f_chap
+
+                            omega = omega + np.absolute(f_chap) ** 2
+
+                    """for channel_ in range(0, channel):
+                        for filter_index in range(0, nombre_filtre):
+                            norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
+                            Net1.conv_real.weight.data[filter_index, channel_] = Net1.conv_real.weight.data[
+                                                                                     filter_index, channel_] / norm[
+                                                                                     filter_index, channel_]
+                            Net1.conv_imag.weight.data[filter_index, channel_] = Net1.conv_imag.weight.data[
+                                                                                     filter_index, channel_] / norm[
+                                                                                     filter_index, channel_]"""
+
+                    omega = np.sqrt(omega / channel)
                                                                                                                 #'channel_': channel_})
 
 
