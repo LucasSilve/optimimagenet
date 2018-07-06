@@ -313,7 +313,7 @@ def train(train_loader, model, optimizer, epoch):
                     plt.subplot(1, 3, 2)
                     plt.imshow(fimag)
                     plt.subplot(1,3,3)
-                    plt.imshow(h[k,channel_])
+                    plt.imshow(np.absolute(h[k,channel_]))
 
                     fig.savefig('/home/lucass/optimimagenet/images2/filter{k}channel{channel_}batch{i}.pdf'.format(
                         k=k,channel_=channel_,i=i))
