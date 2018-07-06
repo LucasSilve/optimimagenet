@@ -221,7 +221,7 @@ def myloss(input,net):
     loss = loss+regular_*lambda_regular
     return loss,y,p,ratio
 
-def pad(f):                                         #effectue un padding pour le filtre pour pouvoir faire la transformée de Fourier
+def pad(f):                                         #effectue un padding pour le filtre pour pouvoir faire la transformee de Fourier
     out=np.zeros((imsize,imsize), dtype=complex)
     out[imsize//2-padding_:imsize//2 +1+padding_,imsize//2-padding_:imsize//2+1+padding_]=f
     return out
