@@ -320,6 +320,7 @@ def train(train_loader, model, optimizer, epoch):
                     img3=ax3.imshow(fftshift(np.absolute(h[k,channel_])))
                     colorbar(img3)
 
+                    plt.tight_layout(h_pad=1)
                     fig.savefig('/home/lucass/optimimagenet/images2/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
                         k=k,channel_=channel_))
 
