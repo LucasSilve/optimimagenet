@@ -294,27 +294,6 @@ def train(train_loader, model, optimizer, epoch):
                   #'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
 
-        if i%500==0:
-
-
-            for k in range(0, nombre_filtre):
-
-                for channel_ in range(0, channel):
-                    fig, (ax1, ax2,ax3) = plt.subplots(ncols=3)
-                    freal = model.conv_real.weight.data[k, channel_]
-                    fimag = model.conv_imag.weight.data[k, channel_]
-                    img1=ax1.imshow(freal)
-                    colorbar(img1)
-                    img2=ax2.imshow(fimag)
-                    colorbar(img2)
-                    g=fftshift(np.absolute(h[k,channel_]))
-                    img3=ax3.imshow(g)
-                    colorbar(img3)
-
-                    plt.tight_layout(h_pad=1)
-                    if np.max(g)>=0.5:
-                        fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
-                            k=k,channel_=channel_))
 
 
         if i%20==0:
@@ -347,7 +326,35 @@ def train(train_loader, model, optimizer, epoch):
             print('control :', np.min(norm))
         omega = np.sqrt(omega / channel)
                                                                                                                 #'channel_': channel_})
+        if i%500==0:
 
+
+            for k in range(0, nombre_filtre):
+
+                for channel_ in range(0, channel):
+                    fig, (ax1, ax2,ax3) = plt.subplots(ncols=3)
+                    freal = model.conv_real.weight.data[k, channel_]
+                    fimag = model.conv_imag.weight.data[k, channel_]
+                    img1=ax1.imshow(freal)
+                    colorbar(img1)
+                    img2=ax2.imshow(fimag)
+                    colorbar(img2)
+                    g=fftshift(np.absolute(h[k,channel_]))
+                    img3=ax3.imshow(g)
+                    colorbar(img3)
+
+                    plt.tight_layout(h_pad=1)
+                    if np.max(g)>=0.5:
+                        fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
+                            k=k,channel_=channel_))
+            fig, ax1=plt.subplots(ncols=1)
+            img1=ax1.imshow(omega)
+            colorbar(img1)
+            plt.tight_layout(h_pad=1)
+            if np.max(g) >= 0.5:
+                fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}LWP.pdf'.format(i=i,
+                                                                                                              k=k,
+                                                                                                              channel_=channel_))
 
 def validate(val_loader, model, criterion):
     batch_time = AverageMeter()
