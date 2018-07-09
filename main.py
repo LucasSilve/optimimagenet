@@ -323,12 +323,14 @@ def train(train_loader, model, optimizer, epoch):
                     colorbar(img1)
                     img2=ax2.imshow(fimag)
                     colorbar(img2)
-                    img3=ax3.imshow(fftshift(np.absolute(h[k,channel_])))
+                    g=fftshift(np.absolute(h[k,channel_]))
+                    img3=ax3.imshow(g)
                     colorbar(img3)
 
                     plt.tight_layout(h_pad=1)
-                    fig.savefig('/home/lucass/optimimagenet/images3/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
-                        k=k,channel_=channel_))
+                    if torch.max(g)>=0.5:
+                        fig.savefig('/home/lucass/optimimagenet/images3/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
+                            k=k,channel_=channel_))
 
 
         if i%20==0:
