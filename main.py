@@ -329,10 +329,10 @@ def train(train_loader, model, optimizer, epoch):
             for channel_ in range(0, channel):
                 for filter_index in range(0, nombre_filtre):
                     norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
-                    Net1.conv_real.weight.data[filter_index, channel_] = 2*Net1.conv_real.weight.data[
+                    model.conv_real.weight.data[filter_index, channel_] = 2*model.conv_real.weight.data[
                                                                              filter_index, channel_] / norm[
                                                                              filter_index, channel_]
-                    Net1.conv_imag.weight.data[filter_index, channel_] = 2*Net1.conv_imag.weight.data[
+                    model.conv_imag.weight.data[filter_index, channel_] = 2*model.conv_imag.weight.data[
                                                                              filter_index, channel_] / norm[
                                                                              filter_index, channel_]
 
