@@ -351,8 +351,8 @@ def train(train_loader, model, optimizer, epoch):
             img1=ax1.imshow(omega)
             colorbar(img1)
             plt.tight_layout(h_pad=1)
-            if np.max(g) >= 0.5:
-                fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}LWP.pdf'.format(i=i,
+
+            fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}LWP.pdf'.format(i=i,
                                                                                                               k=k,
                                                                                                               channel_=channel_))
 
