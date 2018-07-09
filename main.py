@@ -343,7 +343,7 @@ def train(train_loader, model, optimizer, epoch):
                     model.conv_imag.weight.data[filter_index, channel_] = 2*model.conv_imag.weight.data[
                                                                              filter_index, channel_] / (norm[
                                                                              filter_index, channel_]+1e-4)
-
+                    print('control :', np.min(norm))
         omega = np.sqrt(omega / channel)
                                                                                                                 #'channel_': channel_})
 
