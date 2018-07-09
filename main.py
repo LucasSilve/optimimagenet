@@ -325,18 +325,18 @@ def train(train_loader, model, optimizer, epoch):
                         k=k,channel_=channel_))
 
 
+            if i%20==0:
+                for channel_ in range(0, channel):
+                    for filter_index in range(0, nombre_filtre):
+                        norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
+                        Net1.conv_real.weight.data[filter_index, channel_] = 2*Net1.conv_real.weight.data[
+                                                                                 filter_index, channel_] / norm[
+                                                                                 filter_index, channel_]
+                        Net1.conv_imag.weight.data[filter_index, channel_] = 2*Net1.conv_imag.weight.data[
+                                                                                 filter_index, channel_] / norm[
+                                                                                 filter_index, channel_]
 
-                    """for channel_ in range(0, channel):
-                        for filter_index in range(0, nombre_filtre):
-                            norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
-                            Net1.conv_real.weight.data[filter_index, channel_] = Net1.conv_real.weight.data[
-                                                                                     filter_index, channel_] / norm[
-                                                                                     filter_index, channel_]
-                            Net1.conv_imag.weight.data[filter_index, channel_] = Net1.conv_imag.weight.data[
-                                                                                     filter_index, channel_] / norm[
-                                                                                     filter_index, channel_]"""
-
-                    omega = np.sqrt(omega / channel)
+                omega = np.sqrt(omega / channel)
                                                                                                                 #'channel_': channel_})
 
 
