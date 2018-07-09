@@ -21,6 +21,8 @@ from scipy.fftpack import fft2
 import torch.nn.functional as F
 import matplotlib
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
 plt.switch_backend('agg')
 
 
