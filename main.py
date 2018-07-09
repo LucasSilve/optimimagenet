@@ -173,11 +173,7 @@ def main():
         #train(model, optimizer, epoch)
         # evaluate on validation set
 
-        print('epoch =', epoch + 1)
-        print('loss = ', losses.avg)
-        print('ratio regular/realloss =', ratio.avg.item())
-        losses.reset()
-        ratio.reset()
+
         # save filter images
         """for k in range(0, nombre_filtre):
 
@@ -225,6 +221,13 @@ def pad(f):                                         #effectue un padding pour le
     out=np.zeros((imsize,imsize), dtype=complex)
     out[imsize//2-padding_:imsize//2 +1+padding_,imsize//2-padding_:imsize//2+1+padding_]=f
     return out
+
+def colorbar(mappable):
+    ax = mappable.axes
+    fig = ax.figure
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    return fig.colorbar(mappable, cax=cax)
 
 def train(train_loader, model, optimizer, epoch):
 #def train(model, optimizer, epoch):
@@ -305,18 +308,18 @@ def train(train_loader, model, optimizer, epoch):
             for k in range(0, nombre_filtre):
 
                 for channel_ in range(0, channel):
-                    fig = plt.figure(1 + k * channel + channel_)
+                    fig, (ax1, ax2,ax3) = plt.subplots(ncols=3)
                     freal = model.conv_real.weight.data[k, channel_]
                     fimag = model.conv_imag.weight.data[k, channel_]
-                    plt.subplot(1, 3, 1)
-                    plt.imshow(freal)
-                    plt.subplot(1, 3, 2)
-                    plt.imshow(fimag)
-                    plt.subplot(1,3,3)
-                    plt.imshow(np.absolute(h[k,channel_]))
+                    img1=ax1.imshow(freal)
+                    colorbar(img1)
+                    img2=ax2.imshow(fimag)
+                    colorbar(img2)
+                    img3=ax3.imshow(fftshift(np.absolute(h[k,channel_])))
+                    colorbar(img3)
 
-                    fig.savefig('/home/lucass/optimimagenet/images2/filter{k}channel{channel_}batch{i}.pdf'.format(
-                        k=k,channel_=channel_,i=i))
+                    fig.savefig('/home/lucass/optimimagenet/images2/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
+                        k=k,channel_=channel_))
 
 
 
