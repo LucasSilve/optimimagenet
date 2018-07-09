@@ -326,7 +326,7 @@ def train(train_loader, model, optimizer, epoch):
                     colorbar(img3)
 
                     plt.tight_layout(h_pad=1)
-                    fig.savefig('/home/lucass/optimimagenet/images2/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
+                    fig.savefig('/home/lucass/optimimagenet/images3/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
                         k=k,channel_=channel_))
 
 
