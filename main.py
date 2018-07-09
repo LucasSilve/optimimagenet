@@ -328,7 +328,7 @@ def train(train_loader, model, optimizer, epoch):
                     colorbar(img3)
 
                     plt.tight_layout(h_pad=1)
-                    if torch.max(g)>=0.5:
+                    if np.max(g)>=0.5:
                         fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
                             k=k,channel_=channel_))
 
