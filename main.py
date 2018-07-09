@@ -449,7 +449,7 @@ def accuracy(output, target, topk=(1,)):
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
 
-lum_seul=True
+lum_seul=False
 if lum_seul:
     channel=1
 else: channel=3
