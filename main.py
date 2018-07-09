@@ -252,7 +252,12 @@ def train(train_loader, model, optimizer, epoch):
         # measure data loading time
         data_time.update(time.time() - end)
         #target = target.cuda(non_blocking=True)
-
+        if lum_seul:
+            aux=torch.ones(1)
+            aux*=3
+            aux=torch.sqrt(aux)
+            aux=aux.item()
+            input=input/aux
         input=input.cuda()
         # compute output
 
@@ -433,7 +438,7 @@ def accuracy(output, target, topk=(1,)):
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
 
-lum_seul=False
+lum_seul=True
 if lum_seul:
     channel=1
 else: channel=3
