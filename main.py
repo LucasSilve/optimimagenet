@@ -298,7 +298,6 @@ def train(train_loader, model, optimizer, epoch):
             h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
 
             omega = np.zeros((imsize, imsize))  # stock la somme des modules au carre des psi chapeau
-            norm = np.zeros((nombre_filtre, channel))
 
             for channel_ in range(0, channel):
                 for filter_index in range(0, nombre_filtre):
@@ -334,6 +333,8 @@ def train(train_loader, model, optimizer, epoch):
 
 
         if i%20==0:
+            norm = np.zeros((nombre_filtre, channel))
+
             for channel_ in range(0, channel):
                 for filter_index in range(0, nombre_filtre):
                     norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
@@ -343,7 +344,7 @@ def train(train_loader, model, optimizer, epoch):
                     model.conv_imag.weight.data[filter_index, channel_] = 2*model.conv_imag.weight.data[
                                                                              filter_index, channel_] / (norm[
                                                                              filter_index, channel_]+1e-4)
-                    print('control :', np.min(norm))
+            print('control :', np.min(norm))
         omega = np.sqrt(omega / channel)
                                                                                                                 #'channel_': channel_})
 
