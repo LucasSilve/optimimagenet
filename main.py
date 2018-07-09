@@ -295,22 +295,7 @@ def train(train_loader, model, optimizer, epoch):
                   #'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'
 
         if i%500==0:
-            h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
 
-            omega = np.zeros((imsize, imsize))  # stock la somme des modules au carre des psi chapeau
-
-            for channel_ in range(0, channel):
-                for filter_index in range(0, nombre_filtre):
-                    fr = model.conv_real.weight.data[filter_index, channel_]
-                    fi = model.conv_imag.weight.data[filter_index, channel_]
-                    fr = fr.cpu().detach().numpy()
-                    fi = fi.cpu().detach().numpy()
-                    f = fr + 1j * fi
-                    f = pad(f)
-                    f_chap = fft2(f)
-                    h[filter_index, channel_, :, :] = f_chap
-
-                    omega = omega + np.absolute(f_chap) ** 2
 
             for k in range(0, nombre_filtre):
 
@@ -334,7 +319,22 @@ def train(train_loader, model, optimizer, epoch):
 
         if i%20==0:
             norm = np.zeros((nombre_filtre, channel))
+            h = np.zeros((nombre_filtre, channel, imsize, imsize), dtype=complex)  # stock la FFT des filtres
 
+            omega = np.zeros((imsize, imsize))  # stock la somme des modules au carre des psi chapeau
+
+            for channel_ in range(0, channel):
+                for filter_index in range(0, nombre_filtre):
+                    fr = model.conv_real.weight.data[filter_index, channel_]
+                    fi = model.conv_imag.weight.data[filter_index, channel_]
+                    fr = fr.cpu().detach().numpy()
+                    fi = fi.cpu().detach().numpy()
+                    f = fr + 1j * fi
+                    f = pad(f)
+                    f_chap = fft2(f)
+                    h[filter_index, channel_, :, :] = f_chap
+
+                    omega = omega + np.absolute(f_chap) ** 2
             for channel_ in range(0, channel):
                 for filter_index in range(0, nombre_filtre):
                     norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
