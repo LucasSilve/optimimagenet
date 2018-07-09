@@ -258,6 +258,7 @@ def train(train_loader, model, optimizer, epoch):
             aux=torch.sqrt(aux)
             aux=aux.item()
             input=input/aux
+            input=torch.sum(input,1,keepdim=True)
         input=input.cuda()
         # compute output
 
