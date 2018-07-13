@@ -192,7 +192,7 @@ def main():
 
 
         # remember best prec@1 and save checkpoint
-        is_best = losses.avg()>best_loss
+        """is_best = losses.avg()>best_loss
         best_loss=max(best_loss,losses.avg())
         save_checkpoint({
             'epoch': epoch + 1,
@@ -200,7 +200,7 @@ def main():
             'state_dict': model.state_dict(),
             'best_loss': best_loss,
             'optimizer' : optimizer.state_dict(),
-        }, is_best)
+        }, is_best)"""
 
 def norme(x):               #calcule norme(x), renvoi un vecteur de longueur taille du batch
     x = x ** 2
@@ -325,7 +325,7 @@ def train(train_loader, model, optimizer, epoch):
                                                                              filter_index, channel_]+1e-4)
             print('control :', np.min(norm))
         omega = np.sqrt(omega / channel)
-                                                                                                                #'channel_': channel_})
+                                                                                                             #'channel_': channel_})
         if i%500==0:
 
 
@@ -345,9 +345,10 @@ def train(train_loader, model, optimizer, epoch):
 
                     plt.tight_layout(h_pad=1)
                     if np.max(g)>=0.5:
-                        fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
+                        fig.savefig('/home/lucass/optimimagenet/images2/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
                             k=k,channel_=channel_))
             fig, ax1=plt.subplots(ncols=1)
+            omega = fftshift(omega)
             img1=ax1.imshow(omega)
             colorbar(img1)
             plt.tight_layout(h_pad=1)
