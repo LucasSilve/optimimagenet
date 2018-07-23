@@ -345,7 +345,7 @@ def train(train_loader, model, optimizer, epoch):
 
                     plt.tight_layout(h_pad=1)
                     if np.max(g)>=0.5:
-                        fig.savefig('/home/lucass/optimimagenet/images2/batch{i}filter{k}channel{channel_}.pdf'.format(i=i,
+                        fig.savefig('/home/lucass/optimimagenet/images4/epoch{epoch}batch{i}filter{k}channel{channel_}.pdf'.format(epoch=epoch,i=i,
                             k=k,channel_=channel_))
             fig, ax1=plt.subplots(ncols=1)
             omega = fftshift(omega)
@@ -353,8 +353,8 @@ def train(train_loader, model, optimizer, epoch):
             colorbar(img1)
             plt.tight_layout(h_pad=1)
 
-            fig.savefig('/home/lucass/optimimagenet/images/batch{i}filter{k}channel{channel_}LWP.pdf'.format(i=i,
-                                                                                                              k=k,
+            fig.savefig('/home/lucass/optimimagenet/images4/epoch{epoch}batch{i}channel{channel_}LWP.pdf'.format(epoch=epoch,i=i,
+
                                                                                                               channel_=channel_))
 
 def validate(val_loader, model, criterion):
