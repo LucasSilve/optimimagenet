@@ -317,12 +317,13 @@ def train(train_loader, model, optimizer, epoch):
             for channel_ in range(0, channel):
                 for filter_index in range(0, nombre_filtre):
                     norm[filter_index, channel_] = np.max(np.absolute(h[filter_index, channel_, :, :]))
-                    model.conv_real.weight.data[filter_index, channel_] = 2*model.conv_real.weight.data[
+                    if norm[filter_index, channel_]>=2:
+                        model.conv_real.weight.data[filter_index, channel_] = 2*model.conv_real.weight.data[
                                                                              filter_index, channel_] / (norm[
-                                                                             filter_index, channel_]+1e-4)
-                    model.conv_imag.weight.data[filter_index, channel_] = 2*model.conv_imag.weight.data[
+                                                                             filter_index, channel_])
+                        model.conv_imag.weight.data[filter_index, channel_] = 2*model.conv_imag.weight.data[
                                                                              filter_index, channel_] / (norm[
-                                                                             filter_index, channel_]+1e-4)
+                                                                             filter_index, channel_])
             print('control :', np.min(norm))
         omega = np.sqrt(omega / channel)
                                                                                                              #'channel_': channel_})
